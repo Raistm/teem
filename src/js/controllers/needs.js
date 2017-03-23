@@ -85,11 +85,20 @@ angular.module('Teem')
             needsCtrl.toggleCommentsVisibility(n);
           };
 
+          scope.toggleAssigTaskToUserVisibility = function(n){
+            needsCtrl.toggleAssigTaskToUserVisibility(n);
+          };
+
           scope.newComment = {
             text: ''
           };
 
+          scope.assignUserToTask = {
+            name: ''
+          };
+
           scope.areCommentsVisible = needsCtrl.areCommentsVisible;
+          scope.areAssigTaskToUserVisible = needsCtrl.areAssigTaskToUserVisible;
 
           scope.sendComment = function(){
             SessionSvc.loginRequired(scope, function() {
@@ -108,6 +117,23 @@ angular.module('Teem')
             var prevAccess = new Date(scope.project.getTimestampAccess().needs.prev);
             var lastComment = new Date(need.comments[need.comments.length -1].time);
             return prevAccess < lastComment;
+          };
+
+          scope.assignTaskToUser = function(need){
+            if (!need.comments || !scope.project || !scope.project.isParticipant()){
+              return false;
+            }
+
+            var prevAccess = new Date(scope.project.getTimestampAccess().needs.prev);
+            var lastComment = new Date(need.comments[need.comments.length -1].time);
+            return prevAccess < lastComment;
+          };
+
+          scope.addUser = function(){
+            SessionSvc.loginRequired(scope, function() {
+              scope.project.addUserToTask(scope.need, scope.assignUserToTask.name);
+              scope.assignUserToTask.name = '';
+            }, undefined, scope.project.synchPromise());
           };
 
           scope.isNewNeed = function(need){
@@ -138,15 +164,29 @@ angular.module('Teem')
         },
         controller: function($scope, $route, SessionSvc, ProjectsSvc, time) {
           this.comments = {};
+          this.userAssigned = {};
 
           var comments = this.comments;
 
+          var userAssigned = this.userAssigned;
+
           this.toggleCommentsVisibility = function toggleCommentsVisibility(need) {
             comments.visible = (comments.visible === need) ? null : need;
+            userAssigned.visible = null;
           };
+
+          this.toggleAssigTaskToUserVisibility = function toggleAssigTaskToUserVisibility(need) {
+            comments.visible = null;
+            userAssigned.visible  = (userAssigned.visible  === need) ? null : need;
+          };
+
 
           this.areCommentsVisible = function areCommentsVisible(need) {
             return comments.visible === need;
+          };
+
+          this.areAssigTaskToUserVisible = function areAssigTaskToUserVisible(need) {
+            return userAssigned.visible === need;
           };
 
           this.hour = function(comment) {

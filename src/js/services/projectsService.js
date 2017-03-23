@@ -309,6 +309,9 @@ angular.module('Teem')
         });
 
         this.setTimestampAccess('chat', true);
+
+        console.log('AÑADIENDO A LA TAREA UN MENSAGE DE CHAT*****************************************');
+
       }
 
       findNeed (id) {
@@ -373,6 +376,18 @@ angular.module('Teem')
         }
         need.comments.push({
           text: comment,
+          time: (new Date()).toJSON(),
+          author: User.currentId()
+        });
+        this.setTimestampAccess('needs', true);
+      }
+
+      addUserToTask (need, user) {
+        if (!need.userAssigned){
+          need.userAssigned = [];
+        }
+        need.userAssigned.push({
+          name: user,
           time: (new Date()).toJSON(),
           author: User.currentId()
         });

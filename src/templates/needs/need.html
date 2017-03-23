@@ -1,8 +1,7 @@
 <div class="list-group-item need-item"
      ng-if="project.isParticipant() || need.completed !== 'add'"
      ng-class="'need-item-completed-' + need.completed">
-  <div class="need-body flex-container-row"
-       ng-click="toggleCommentsVisibility(need)">
+  <div class="need-body flex-container-row">
     <form class="flex-container">
       <div class="form-group need-form" ng-class="isNewNeed(need)? 'notify-need':''">
         <div class="checkbox" ng-if="need.completed !== 'add'">
@@ -32,10 +31,19 @@
         </div>
       </div>
     </form>
-    <div ng-if="need.completed !== 'add'" class="{{need.comments.length ? 'active' : ''}}">
+    <div ng-if="need.completed !== 'add'" class="{{need.comments.length ? 'active' : ''}}"
+         ng-click="toggleCommentsVisibility(need)">
       <span class="icon-count">
         <i class="i-comment" ng-class="newComments(need)? 'notify-comments':''">
           <span class="icon-count-number">{{ need.comments && need.comments.length || 0 }}</span>
+        </i>
+      </span>
+    </div>
+    <div ng-if="need.completed !== 'add'" class="{{need.userAssigned.length ? 'active' : ''}}"
+         ng-click="toggleAssigTaskToUserVisibility(need)">
+      <span class="icon-count">
+        <i class="i-community" ng-class="assignTaskToUser(need)? 'notify-comments':''">
+          <span class="icon-count-number">{{ need.userAssigned && need.userAssigned.length || 0 }}</span>
         </i>
       </span>
     </div>
@@ -72,3 +80,36 @@
       </form>
     </div>
   </div>
+  <div class="need-comments" ng-show="areAssigTaskToUserVisible(need) && need.completed !== 'add'">
+    <div class="media" ng-repeat="userAssigned in need.userAssigned">
+      <div class="media-left">
+        <div avatars="userAssigned.author" avatars-conf="{size: 'xsmall'}" class="avatars-without-names"></div>
+      </div>
+      <div class="media-body">
+        <div>
+        <span class="comment-author-name" bo-html="userAssigned.author.split('@')[0]"></span>
+        <span class="comment-time" am-time-ago="userAssigned.time"></span></div>
+        <div bo-html="userAssigned.name | linky"></div>
+      </div>
+    </div>
+    <div class="new-need-comment">
+      <form class="new-need-comment-send" ng-submit="addUser()">
+        <div class="form-group">
+          <div class="input-group input-group-sm">
+            <textarea class="form-control"
+                      rows="1" hide-tabs
+                      ng-model="assignUserToTask.name"
+                      placeholder="{{ 'need.userAssigned.input' | translate}}"
+                      ng-keydown="keyDown($event)">
+            </textarea>
+            <span class="input-group-addon">
+              <button type="submit" class="btn btn-link need-comment-input-button">
+                <i class="i-send"></i>
+              </button>
+            </span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
