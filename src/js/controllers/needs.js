@@ -70,7 +70,12 @@ angular.module('Teem')
 
           scope.keyDown = function(event){
             if (event.which === 13) { // enter
-              scope.sendComment();
+              if ( scope.newComment.text !== '') {
+                scope.sendComment();
+              }
+              if (scope.assignUserToTask.name !== '') {
+                scope.addUser();
+              }
 
               // Do not add new line to comment input
               event.preventDefault();
@@ -120,12 +125,12 @@ angular.module('Teem')
           };
 
           scope.assignTaskToUser = function(need){
-            if (!need.comments || !scope.project || !scope.project.isParticipant()){
+            if (!need.userAssigned || !scope.project || !scope.project.isParticipant()){
               return false;
             }
 
             var prevAccess = new Date(scope.project.getTimestampAccess().needs.prev);
-            var lastComment = new Date(need.comments[need.comments.length -1].time);
+            var lastComment = new Date(need.userAssigned[need.userAssigned.length -1].time);
             return prevAccess < lastComment;
           };
 
