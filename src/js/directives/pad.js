@@ -21,12 +21,13 @@ angular.module('Teem')
         function(SessionSvc, $rootScope, $scope, $route, $location,
         $timeout, SharedState, needWidget, $element) {
 
-          var buttons = ['text_fields', 'format_bold', 'format_italic', 'format_strikethrough',
+          var buttons = ['text_fields', 'text_highlights' ,'format_bold', 'format_italic', 'format_strikethrough',
           'format_align_left', 'format_align_center', 'format_align_right',
           'format_list_bulleted', 'format_list_numbered'];
 
           var annotationMap = {
             'text_fields': 'paragraph/header=h3',
+            'text_highlights': 'paragraph/highlight=h3',
             'format_bold': 'style/fontWeight=bold',
             'format_italic': 'style/fontStyle=italic',
             'format_strikethrough': 'style/textDecoration=line-through',
@@ -81,6 +82,20 @@ angular.module('Teem')
               },
               onRemove: function() {
                 $scope.pad.outline = this.editor.getAnnotationSet('paragraph/header');
+                $timeout();
+              }
+            },
+            'paragraph/highlight': {
+              onAdd: function() {
+                $scope.pad.outline = this.editor.getAnnotationSet('paragraph/highlight');
+                $timeout();
+              },
+              onChange: function() {
+                $scope.pad.outline = this.editor.getAnnotationSet('paragraph/highlight');
+                $timeout();
+              },
+              onRemove: function() {
+                $scope.pad.outline = this.editor.getAnnotationSet('paragraph/highlight');
                 $timeout();
               }
             },
@@ -171,6 +186,7 @@ angular.module('Teem')
             editorElement.on('blur', disableAllButtons);
 
             $scope.pad.outline = editor.getAnnotationSet('paragraph/header');
+            $scope.pad.outline = editor.getAnnotationSet('paragraph/highlight');
 
             $scope.annotate = function(btn) {
               let [key, val] = annotationMap[btn].split('=');
