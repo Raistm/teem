@@ -273,7 +273,7 @@
       "img": "Insert image",
       "need": "Insert task",
       "text_fields": "Heading",
-      "text_highlights": "Highlight",
+      "highlightText": "Add to summary",
       "format_bold": "Bold",
       "format_italic": "Italic",
       "format_strikethrough": "Strikethrough",

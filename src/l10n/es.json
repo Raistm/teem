@@ -273,7 +273,7 @@
       "img": "Insertar image",
       "need": "Insertar tarea",
       "text_fields": "Encabezado",
-      "text_highlights": "Subrayado",
+      "highlightText": "Marcar para resumen",
       "format_bold": "Negrita",
       "format_italic": "Cursiva",
       "format_strikethrough": "Tachado",
