@@ -18,13 +18,20 @@ angular.module('Teem')
   }])
   .directive(
     'needDisplay',
-    function(SessionSvc, ProjectsSvc, $route){
+    function(SessionSvc, ProjectsSvc, $route, Selector){
       return {
         require: '^needList',
         scope: {
           need: '='
         },
         link: function (scope, element, attrs, needsCtrl) {
+
+          // LF : creamos la variable invite con una lista de miembros de teem para invitar y la lista de seleccionados
+          scope.invite = {
+            list : [],
+            selected : []
+          };
+
           scope.toggleCompleted = function (need, event) {
             // Needed by the magic of material design
             event.preventDefault();
@@ -54,6 +61,14 @@ angular.module('Teem')
             ProjectsSvc.findByUrlId($route.current.params.id).then(
               function(project){
                 scope.project = project;
+                Selector.populateUserSelector(scope.invite.list, scope.project.communities);
+                if (!scope.need.userAssigned ) {
+                  scope.need.userAssigned = {
+                    users: [],
+                    emails: [],
+                    text: []
+                  };
+                }
               }
             );
           });
@@ -134,10 +149,20 @@ angular.module('Teem')
             return prevAccess < lastComment;
           };
 
+          scope.userSelectorConfig = Selector.config.users;
+
           scope.addUser = function(){
             SessionSvc.loginRequired(scope, function() {
-              scope.project.addUserToTask(scope.need, scope.assignUserToTask.name);
-              scope.assignUserToTask.name = '';
+              console.log('Selecccionado', scope.invite.selected);
+              var result = Selector.assignTask(scope.invite.selected, scope.project);
+              result.users.forEach(function (user) {
+                scope.need.userAssigned.users.push(user);
+              });
+              result.emails.forEach(function (email) {
+                scope.need.userAssigned.emails.push(email);
+              });
+              console.log(result);
+              scope.invite.selected = [];
             }, undefined, scope.project.synchPromise());
           };
 
@@ -168,6 +193,8 @@ angular.module('Teem')
           needs: '='
         },
         controller: function($scope, $route, SessionSvc, ProjectsSvc, time) {
+
+
           this.comments = {};
           this.userAssigned = {};
 

@@ -210,6 +210,72 @@ angular.module('Teem')
             }
           }
         }
+      },
+
+      assignTask: function(invitees, hasParticipantsObject){
+
+        var users  = [],
+            emails = [];
+          console.log(invitees);
+        if (invitees){
+
+          let notificationScope = $rootScope.$new(true);
+          notificationScope.values = {};
+
+          invitees.forEach(function(i){
+
+            var value;
+
+            try {
+              value = JSON.parse(i);
+            }
+            // if it is an existing user
+            catch (e) {
+              hasParticipantsObject.addParticipant(i);
+              users.push(i);
+              emails.push(i);
+
+              return;
+            }
+
+            // if it is an email address
+            if (typeof value === 'object'){
+              if (value.email) {
+                emails.push(value.email);
+              }
+            }
+          });
+
+          if (users.length) {
+            notificationScope.values.addedParticipants = users.map(u => u.split('@')[0]).join(', ');
+            // Notification.success({message: hasParticipantsObject.type + '.participate.add.notification', scope: notificationScope });
+
+          }
+
+          if (emails.length > 0){
+
+            swellRT.invite(emails, hasParticipantsObject.url({campaign: 'inviteEmail'}),
+              // project.title || community.name
+              hasParticipantsObject.title || hasParticipantsObject.name, function(s){console.log(s);}, function(e){console.log('error:', e);});
+
+            // remove from emails existing user addresses, that has already been invited and notified
+            emails.forEach(function(e, i){
+              if (users.indexOf(e) >= 0){
+                emails.splice(i, 1);
+              }
+            });
+
+            if (emails.length > 0){
+              notificationScope.values.invitedParticipants = emails.join(', ');
+              // Notification.success({message: hasParticipantsObject.type + '.participate.invite.notification', scope: notificationScope });
+            }
+          }
+
+        }
+        return {
+          users: users,
+          emails: emails
+        };
       }
     };
 
