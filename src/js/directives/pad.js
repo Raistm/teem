@@ -95,7 +95,7 @@ angular.module('Teem')
               }
             }
           };
-
+          
           function updateAllButtons() {
             for (let btn of buttons) {
               let [key, val] = annotationMap[btn].split('=');
