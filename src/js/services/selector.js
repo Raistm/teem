@@ -103,7 +103,7 @@ angular.module('Teem')
             regex = new RegExp('^' + REGEX_EMAIL + '$', 'i');
             match = input.match(regex);
             if (match){
-              return !this.options.hasOwnProperty(match[0]);
+              return !this.options.hasOwnProperty(input);
             }
             return false;
           },
@@ -113,6 +113,61 @@ angular.module('Teem')
               nick: input,
               _id: JSON.stringify({
                 email: input
+              })
+            };
+          },
+          onDropdownOpen(dropdown){
+            dropdown[0].scrollIntoView();
+          },
+          closeAfterSelect: true,
+          render: {
+            item: function(i,e){
+              return renderAvatar(i, e, 'item');
+            },
+            option: function(i,e){
+              return renderAvatar(i, e, 'option');
+            }
+          },
+        },
+        userToTask: {
+          plugins: ['remove_button'],
+          valueField:'_id',
+          labelField:'nick',
+          searchField:'nick',
+          autocapitalize: 'off',
+          load: function(query, callback){
+            if (!query.length) {
+              return callback();
+            }
+            User.usersLike(query)
+            .then(function(r){
+              callback(buildUserItems(r));
+              $timeout();
+            }, function(){
+              callback();
+              $timeout();
+            });
+          },
+          //code based on https://selectize.github.io/selectize.js/ email example
+          createFilter: function(input){
+            var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
+            '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
+
+            var match, regex;
+
+            regex = new RegExp('^' + REGEX_EMAIL + '$', 'i');
+            match = input.match(regex);
+            if (!match){
+              return true;
+            }
+            return false;
+          },
+          //code based on https://selectize.github.io/selectize.js/ email example
+          create: function(input){
+            return {
+              nick: input,
+              _id: JSON.stringify({
+                name: input
               })
             };
           },
@@ -213,10 +268,8 @@ angular.module('Teem')
       },
 
       assignTask: function(invitees, hasParticipantsObject){
-
         var users  = [],
-            emails = [];
-          console.log(invitees);
+            names = [];
         if (invitees){
 
           let notificationScope = $rootScope.$new(true);
@@ -233,48 +286,20 @@ angular.module('Teem')
             catch (e) {
               hasParticipantsObject.addParticipant(i);
               users.push(i);
-              emails.push(i);
-
               return;
             }
 
-            // if it is an email address
+            // if it is an nick or name of person
             if (typeof value === 'object'){
-              if (value.email) {
-                emails.push(value.email);
+              if (value.name) {
+                names.push(value.name);
               }
             }
           });
-
-          if (users.length) {
-            notificationScope.values.addedParticipants = users.map(u => u.split('@')[0]).join(', ');
-            // Notification.success({message: hasParticipantsObject.type + '.participate.add.notification', scope: notificationScope });
-
-          }
-
-          if (emails.length > 0){
-
-            swellRT.invite(emails, hasParticipantsObject.url({campaign: 'inviteEmail'}),
-              // project.title || community.name
-              hasParticipantsObject.title || hasParticipantsObject.name, function(s){console.log(s);}, function(e){console.log('error:', e);});
-
-            // remove from emails existing user addresses, that has already been invited and notified
-            emails.forEach(function(e, i){
-              if (users.indexOf(e) >= 0){
-                emails.splice(i, 1);
-              }
-            });
-
-            if (emails.length > 0){
-              notificationScope.values.invitedParticipants = emails.join(', ');
-              // Notification.success({message: hasParticipantsObject.type + '.participate.invite.notification', scope: notificationScope });
-            }
-          }
-
         }
         return {
           users: users,
-          emails: emails
+          names: names
         };
       }
     };

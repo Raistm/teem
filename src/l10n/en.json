@@ -208,7 +208,8 @@
       "done": "Done",
       "todo": "To-do"
     },
-    "tip": "This is what we task to get the project going"
+    "tip": "This is what we task to get the project going",
+    "assignUser": "Assign need to ..."
   },
   "newForm": {
     "btn": {

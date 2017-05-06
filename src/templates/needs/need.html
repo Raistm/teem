@@ -81,58 +81,21 @@
     </div>
   </div>
   <div class="need-comments" ng-show="areAssigTaskToUserVisible(need) && need.completed !== 'add'">
-    <!-- <div class="media" ng-repeat="userAssigned in need.userAssigned.assigned">
-      <div class="media-left">
-        <div avatars="userAssigned.author" avatars-conf="{size: 'xsmall'}" class="avatars-without-names"></div>
-      </div>
-      <div class="media-body">
-        <div>
-        <span class="comment-author-name" bo-html="userAssigned.author.split('@')[0]"></span>
-        <span class="comment-time" am-time-ago="userAssigned.time"></span></div>
-        <div bo-html="userAssigned.name | linky"></div>
-      </div>
-    </div> -->
     <div avatars="need.userAssigned.users" avatars-conf="{size: 'xsmall'}" class="avatars"></div>
     <div lass="media">
-      <span ng-repeat="email in need.userAssigned.emails"> {{email}}, </span>
+      <span ng-repeat="name in need.userAssigned.names"> {{name.name}}, </span>
     </div>
     <div class="new-need-comment">
-          <div>
-            <selector multiple
-            config="userSelectorConfig"
-            options="invite.list" ng-model="invite.selected"
-            placeholder=" 'need.assignUser' | translate"></selector>
-          </div>
-    </div>
-    <div class="new-need-comment">
-      <div class="input-group input-group-sm">
-        <span class="input-group-addon">
-          <button type="submit" class="btn btn-link need-comment-input-button"
-          ng-click="addUser()"
-          analytics-on="click">
-            <i class="i-send"></i>
-          </button>
-        </span>
-      </div>
-    </div>
-    <!-- <div class="new-need-comment">
-      <form class="new-need-comment-send" ng-submit="addUser()">
-        <div class="form-group">
-          <div class="input-group input-group-sm">
-            <textarea class="form-control"
-                      rows="1" hide-tabs
-                      ng-model="assignUserToTask.name"
-                      placeholder="{{ 'need.userAssigned.input' | translate}}"
-                      ng-keydown="keyDown($event)">
-            </textarea>
-            <span class="input-group-addon">
-              <button type="submit" class="btn btn-link need-comment-input-button">
-                <i class="i-send"></i>
+              <selector multiple
+                config="userSelectorConfig"
+                options="invite.list" ng-model="invite.selected"
+                placeholder=" 'need.assignUser' | translate">
+              </selector>
+              <button type="submit" class="btn input-group"
+                  ng-click="addUser()"
+                  analytics-on="click">
+                    <i class="i-send"></i>
               </button>
-            </span>
-          </div>
-        </div>
-      </form>
-    </div> -->
+    </div>
   </div>
 </div>

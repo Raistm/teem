@@ -62,13 +62,6 @@ angular.module('Teem')
               function(project){
                 scope.project = project;
                 Selector.populateUserSelector(scope.invite.list, scope.project.communities);
-                if (!scope.need.userAssigned ) {
-                  scope.need.userAssigned = {
-                    users: [],
-                    emails: [],
-                    text: []
-                  };
-                }
               }
             );
           });
@@ -113,10 +106,6 @@ angular.module('Teem')
             text: ''
           };
 
-          scope.assignUserToTask = {
-            name: ''
-          };
-
           scope.areCommentsVisible = needsCtrl.areCommentsVisible;
           scope.areAssigTaskToUserVisible = needsCtrl.areAssigTaskToUserVisible;
 
@@ -149,20 +138,15 @@ angular.module('Teem')
             return prevAccess < lastComment;
           };
 
-          scope.userSelectorConfig = Selector.config.users;
+          scope.userSelectorConfig = Selector.config.userToTask;
 
           scope.addUser = function(){
+            var result;
             SessionSvc.loginRequired(scope, function() {
-              console.log('Selecccionado', scope.invite.selected);
-              var result = Selector.assignTask(scope.invite.selected, scope.project);
-              result.users.forEach(function (user) {
-                scope.need.userAssigned.users.push(user);
-              });
-              result.emails.forEach(function (email) {
-                scope.need.userAssigned.emails.push(email);
-              });
-              console.log(result);
+              result = Selector.assignTask(scope.invite.selected, scope.project);
               scope.invite.selected = [];
+              console.log(result);
+              scope.project.addUserToTask(scope.need, result.users, result.names);
             }, undefined, scope.project.synchPromise());
           };
 
