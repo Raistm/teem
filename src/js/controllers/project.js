@@ -417,6 +417,28 @@ angular.module('Teem')
 
     };
 
+    $scope.turn = {name: ''};
+
+    $scope.takeSpeaktime = function () {
+        $scope.project.addTurn($scope.turn.name);
+        $scope.turn.name = '';
+    };
+
+    $scope.stopSpeakTime = function () {
+      $scope.project.nextTurn();
+    };
+
+    $scope.keyDown = function(event){
+      if (event.which === 13) { // enter
+        $scope.project.addTurn($scope.turn.name);
+
+        $scope.turn.name = '';
+
+        // Do not add new line to comment input
+        event.preventDefault();
+      }
+    };
+
     $scope.archiveProject = function() {
       // TODO
     };

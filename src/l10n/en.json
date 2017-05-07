@@ -485,6 +485,10 @@
         },
         "number": "likes",
         "title": "Likes"
+      },
+      "speakingtime": {
+        "title": "Speaking Time",
+        "person": "Add person"
       }
     },
     "share": {

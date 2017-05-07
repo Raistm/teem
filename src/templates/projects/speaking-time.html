@@ -1,0 +1,29 @@
+<h2 translate>project.section.speakingtime.title</h2>
+<div >
+  <div class="media" ng-repeat="turn in project.speakingtime | limitTo:3">
+    <div class="media-left">
+      <img ng-if="turn.state === 'ready'" src="images/play2.png" ng-click="stopSpeakTime()">
+      <img ng-if="turn.state === 'wait'" src="images/timer.png">
+      <span class="icon-count-number">{{ turn.name }}</span>
+    </div>
+  </div>
+  <div class="new-need-comment">
+    <form class="new-need-comment-send" ng-submit="takeSpeaktime()">
+      <div class="form-group">
+        <div class="input-group input-group-sm">
+          <textarea class="form-control"
+                    rows="1" hide-tabs
+                    ng-model="turn.name"
+                    placeholder="{{ 'project.section.speakingtime.person' | translate}}"
+                    ng-keydown="keyDown($event)">
+          </textarea>
+          <span class="input-group-addon">
+            <button type="submit" class="btn btn-link need-comment-input-button">
+              <i class="i-send"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

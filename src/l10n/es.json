@@ -485,6 +485,10 @@
         },
         "number": "me gusta",
         "title": "Me gusta"
+      },
+      "speakingtime": {
+        "title": "Turnos de palabra",
+        "person": "Añadir persona"
       }
     },
     "share": {

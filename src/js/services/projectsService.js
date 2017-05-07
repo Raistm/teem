@@ -383,6 +383,42 @@ angular.module('Teem')
         this.type = 'deleted';
         this.communities = [];
       }
+
+      addTurn(name) {
+        // Quick dirty hack until SwellRT provides ids for array elements
+        if (this.speakingtime === undefined) {
+          this.speakingtime = [];
+        }
+
+        var turn = {name: name};
+        turn._id = Math.random().toString().substring(2);
+        turn.author = SessionSvc.users.current();
+        turn.time = (new Date()).toJSON();
+
+        if (this.speakingtime.length === 0) {
+          turn.state = 'ready';
+        } else {
+          turn.state = 'wait';
+        }
+
+        this.speakingtime.push(turn);
+        this.setTimestampAccess('speakingtime', true);
+        return turn;
+      }
+
+      nextTurn() {
+        // Quick dirty hack until SwellRT provides ids for array elements
+        if (this.registerspeakingtime === undefined) {
+          this.registerspeakingtime = [];
+        }
+        var turn = this.speakingtime[0];
+        turn.timefinish = (new Date()).toJSON();
+        turn.state = 'stoped';
+        this.speakingtime.shift();
+        this.speakingtime[0].state = 'ready';
+        this.registerspeakingtime.push(turn);
+        this.setTimestampAccess('registerspeakingtime', true);
+      }
     }
 
     // Service functions //
@@ -581,6 +617,8 @@ angular.module('Teem')
           proxyProj.promoter = User.currentId();
           proxyProj.supporters = [];
           proxyProj.shareMode = 'public';
+          proxyProj.speakingtime = [];
+          proxyProj.registerspeakingtime = [];
           d.resolve(proxyProj);
         });
       });
