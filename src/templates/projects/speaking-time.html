@@ -1,4 +1,17 @@
-<h2 translate>project.section.speakingtime.title</h2>
+<div class="flex-container-row">
+  <div>
+      <h2 translate>project.section.speakingtime.title</h2>
+  </div>
+  <div>
+    <button class="speaking-register-button btn-raised btn-block i-calendar"
+            ui-set="{'modal.registerSpeakingtime': 'registerSpeakingtime'}"
+            analytics-on="click"
+            analytics-category="Invite to project"
+            analytics-event="Click invite button at participants"
+            translate>
+    </button>
+  </div>
+</div>
 <div >
   <div class="media" ng-repeat="turn in project.speakingtime | limitTo:3">
     <div class="media-left">
@@ -18,7 +31,7 @@
                     ng-keydown="keyDown($event)">
           </textarea>
           <span class="input-group-addon">
-            <button type="submit" class="btn btn-link need-comment-input-button">
+            <button type="submit" class="btn btn-link speaking-register-button">
               <i class="i-send"></i>
             </button>
           </span>
@@ -26,4 +39,34 @@
       </div>
     </form>
   </div>
+</div>
+
+<div ui-content-for="registerSpeakingtimeModal">
+  <modal name="registerSpeakingtime">
+    <header translate>project.section.speakingtime.title</header>
+    <main>
+      <table class="table">
+        <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Start Date
+        </th>
+        <th>
+          End Date
+        </th>
+        <!-- <th>
+          project.section.speakingtime.duration
+        </th> -->
+      </tr>
+        <tr ng-repeat="register in project.registerspeakingtime">
+          <td>{{ register.name }}</td>
+          <td>{{ register.time | amUtc | amDateFormat:'MM/DD/YYYY HH:mm:ss' }}</td>
+          <td>{{ register.timefinish | amUtc | amDateFormat:'MM/DD/YYYY HH:mm:ss' }}</td>
+          <!-- <td>{{ register.timeDiference }}</td> -->
+        </tr>
+      </table>
+    </main>
+  </modal>
 </div>

@@ -428,6 +428,12 @@ angular.module('Teem')
       $scope.project.nextTurn();
     };
 
+    $scope.closeModal = function(){
+      $scope.invite.selected = [];
+      SharedState.turnOff('modal.share');
+      SharedState.turnOff('modal.register');
+    };
+
     $scope.keyDown = function(event){
       if (event.which === 13) { // enter
         $scope.project.addTurn($scope.turn.name);
