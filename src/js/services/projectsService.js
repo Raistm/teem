@@ -409,6 +409,58 @@ angular.module('Teem')
         this.type = 'deleted';
         this.communities = [];
       }
+
+      addTurn(name) {
+        // Quick dirty hack until SwellRT provides ids for array elements
+        if (this.speakingtime === undefined) {
+          this.speakingtime = [];
+        }
+
+        var turn = {name: name};
+        turn._id = Math.random().toString().substring(2);
+        turn.author = SessionSvc.users.current();
+        turn.time = (new Date()).toJSON();
+        turn.timeDiference= '';
+
+        if (this.speakingtime.length === 0) {
+          turn.state = 'ready';
+        } else {
+          turn.state = 'wait';
+        }
+
+        this.speakingtime.push(turn);
+        this.setTimestampAccess('speakingtime', true);
+        return turn;
+      }
+
+      nextTurn() {
+        // Quick dirty hack until SwellRT provides ids for array elements
+        if (this.registerspeakingtime === undefined) {
+          this.registerspeakingtime = [];
+        }
+
+        var turn = this.speakingtime[0];
+        turn.timefinish = (new Date()).toJSON();
+        var init = new Date(turn.time);
+        var end = new Date(turn.timefinish);
+        var ms = end.getMilliseconds() - init.getMilliseconds();
+        // TODO guardar cuanto tiempo ha hablado un usuario
+        var s = Math.floor(ms / 1000);
+        var m = Math.floor(s / 60);
+        s = s % 60;
+        var h = Math.floor(m / 60);
+        m = m % 60;
+        h = h % 24;
+        turn.timeDiference = h + 'h ' + m + 'm ' + s + 's ';
+        turn.state = 'stoped';
+        this.speakingtime.shift();
+        var newFirst = this.speakingtime[0];
+        this.registerspeakingtime.push(turn);
+        newFirst.state = 'ready';
+
+        this.speakingtime[0] = newFirst;
+        this.setTimestampAccess('registerspeakingtime', true);
+      }
     }
 
     // Service functions //
@@ -607,6 +659,8 @@ angular.module('Teem')
           proxyProj.promoter = User.currentId();
           proxyProj.supporters = [];
           proxyProj.shareMode = 'public';
+          proxyProj.speakingtime = [];
+          proxyProj.registerspeakingtime = [];
           d.resolve(proxyProj);
         });
       });

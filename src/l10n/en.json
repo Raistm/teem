@@ -486,6 +486,15 @@
         },
         "number": "likes",
         "title": "Likes"
+      },
+      "speakingtime": {
+        "title": "Speaking Time",
+        "person": "Add person",
+        "record": "Record",
+        "name": "Name",
+        "date_init": "Start date",
+        "date_end": "End date",
+        "duration": "Duration"
       }
     },
     "share": {
