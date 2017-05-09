@@ -209,7 +209,8 @@
       "todo": "Para hacer"
     },
     "tip": "Esto es lo que necesitamos para llevar a cabo el proyecto",
-    "assignUser": "Asignar tarea a ..."
+    "assignUser": "Asignar tarea a ...",
+    "saveassignUser": "Guardar"
   },
   "newForm": {
     "btn": {
@@ -495,7 +496,8 @@
         "name": "Name",
         "date_init": "Start date",
         "date_end": "End date",
-        "duration": "Duration"
+        "duration": "Duration",
+        "save": "Añadir a la lista"
       }
     },
     "share": {
