@@ -21,13 +21,16 @@ angular.module('Teem')
         function(SessionSvc, $rootScope, $scope, $route, $location,
         $timeout, SharedState, needWidget, $element) {
 
-          var buttons = ['text_fields', 'highlightText' ,'format_bold', 'format_italic', 'format_strikethrough',
+          $scope.editor = this.editor;
+          console.log(this.editor);
+
+          var buttons = ['text_fields', 'highlightText', 'format_bold', 'format_italic', 'format_strikethrough',
           'format_align_left', 'format_align_center', 'format_align_right',
           'format_list_bulleted', 'format_list_numbered'];
 
           var annotationMap = {
             'text_fields': 'paragraph/header=h3',
-            'highlightText': 'style/backgroundColor=LawnGreen',
+            'highlightText': 'highlightActas=true',
             'format_bold': 'style/fontWeight=bold',
             'format_italic': 'style/fontStyle=italic',
             'format_strikethrough': 'style/textDecoration=line-through',
@@ -86,6 +89,11 @@ angular.module('Teem')
               }
             },
 
+            'highlightActas': {
+              style: {
+                backgroundColor: 'LawnGreen'
+              } //Será un styleClass
+            },
             'link': {
               onEvent: function(range, event) {
                 if (event.type === 'click') {
@@ -95,7 +103,7 @@ angular.module('Teem')
               }
             }
           };
-          
+
           function updateAllButtons() {
             for (let btn of buttons) {
               let [key, val] = annotationMap[btn].split('=');
@@ -111,6 +119,7 @@ angular.module('Teem')
           }
 
           $scope.padCreate = function(editor) {
+            console.log(editor);
 
             $scope.linkModal = {
               add: function(event) {
