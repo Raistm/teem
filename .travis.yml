@@ -9,8 +9,8 @@ services:
 
 addons:
   ssh_known_hosts:
-    - deploy.teem.works
-    - deploy.staging.teem.works
+    - deploy.actas.teem.works
+    - deploy.staging.actas.teem.works
 
 notifications:
   webhooks:
