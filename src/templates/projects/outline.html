@@ -1,6 +1,6 @@
 <h2><b><i>Puntos del día</i></b></h2>
 <div ng-if="pad.outline.length">
   <ol>
-    <li ng-repeat="heading in pad.outline"><a href="#{{heading.id}}">{{heading.text}}&nbsp&nbsp</a><input type="checkbox"></li>
+    <li ng-repeat="heading in pad.outline"><a href="#{{heading.id}}">{{heading.text}}&nbsp&nbsp</a><input ng-click="updateSelection($event, heading)" type="checkbox"></li>
   </ol>
 </div>

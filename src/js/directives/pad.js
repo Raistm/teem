@@ -92,7 +92,24 @@ angular.module('Teem')
             'highlightActas': {
               style: {
                 backgroundColor: 'LawnGreen'
-              } //Será un styleClass
+              }, //Será un styleClass
+              onAdd: function() {
+                console.log("onAdd de Highlight recibido");
+                $scope.pad.outline = this.editor.getAnnotationSet('highlightActas');
+                console.log(this.editor.getAnnotationSet('highlightActas'));
+                $timeout();
+              },
+              onChange: function() {
+                console.log("Higlight cambiado, recibido");
+                $scope.pad.outline = this.editor.getAnnotationSet('highlightActas');
+                $timeout();
+              },
+              onRemove: function() {
+                console.log("onRemove de Highlight recibido");
+                $scope.pad.outline = this.editor.getAnnotationSet('highlightActas');
+                console.log(this.editor.getAnnotationSet('highlightActas'));
+                $timeout();
+              }
             },
             'link': {
               onEvent: function(range, event) {
@@ -120,6 +137,7 @@ angular.module('Teem')
 
           $scope.padCreate = function(editor) {
             console.log(editor);
+            console.log($scope.pad.outline);
 
             $scope.linkModal = {
               add: function(event) {
