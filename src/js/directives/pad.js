@@ -22,7 +22,6 @@ angular.module('Teem')
         $timeout, SharedState, needWidget, $element) {
 
           $scope.editor = this.editor;
-          console.log(this.editor);
 
           var buttons = ['text_fields', 'highlightText', 'format_bold', 'format_italic', 'format_strikethrough',
           'format_align_left', 'format_align_center', 'format_align_right',
@@ -90,27 +89,35 @@ angular.module('Teem')
             },
 
             'highlightActas': {
+
+              //styleClass: "light-on",
+
               style: {
                 backgroundColor: 'LawnGreen'
               }, //Será un styleClass
-              onAdd: function() {
+
+              onAdd: function(range) {
                 console.log("onAdd de Highlight recibido");
-                $scope.pad.outline = this.editor.getAnnotationSet('highlightActas');
+                var highlightsActasPr = this.editor.getAnnotationInRange(range, 'highlightActas');
+                $scope.pad.highlight = this.editor.getAnnotationSet('highlightActas');
                 console.log(this.editor.getAnnotationSet('highlightActas'));
                 $timeout();
               },
+
               onChange: function() {
                 console.log("Higlight cambiado, recibido");
-                $scope.pad.outline = this.editor.getAnnotationSet('highlightActas');
+                $scope.pad.highlight = this.editor.getAnnotationSet('highlightActas');
                 $timeout();
               },
+
               onRemove: function() {
                 console.log("onRemove de Highlight recibido");
-                $scope.pad.outline = this.editor.getAnnotationSet('highlightActas');
+                $scope.pad.highlight = this.editor.getAnnotationSet('highlightActas');
                 console.log(this.editor.getAnnotationSet('highlightActas'));
                 $timeout();
               }
             },
+
             'link': {
               onEvent: function(range, event) {
                 if (event.type === 'click') {
@@ -137,7 +144,6 @@ angular.module('Teem')
 
           $scope.padCreate = function(editor) {
             console.log(editor);
-            console.log($scope.pad.outline);
 
             $scope.linkModal = {
               add: function(event) {
@@ -200,6 +206,7 @@ angular.module('Teem')
             editorElement.on('blur', disableAllButtons);
 
             $scope.pad.outline = editor.getAnnotationSet('paragraph/header');
+            $scope.pad.highlight = editor.getAnnotationSet('highlightActas');
 
             $scope.annotate = function(btn) {
               let [key, val] = annotationMap[btn].split('=');
