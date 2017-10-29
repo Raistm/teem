@@ -5,6 +5,7 @@
 <div class="project-title-editable container">
   <input class="h1 title-input form-control" ng-model="project.title"
   placeholder="{{'project.title.placeholder' | translate}}" ng-disabled="!project.isParticipant()">
+  <button>Resumen</button>
 
   <button class="btn btn-lg btn-primary btn-raised project-join-btn"
           ng-if="!project.isParticipant()"

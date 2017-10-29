@@ -325,6 +325,7 @@ angular.module('Teem')
         need.author = SessionSvc.users.current();
         need.time = (new Date()).toJSON();
         need.completed = 'false';
+        need.person = need.author;
 
         this.needs.push(need);
         this.setTimestampAccess('needs', true);
