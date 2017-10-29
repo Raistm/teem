@@ -208,7 +208,9 @@
       "done": "Done",
       "todo": "To-do"
     },
-    "tip": "This is what we task to get the project going"
+    "tip": "This is what we task to get the project going",
+    "assignUser": "Assign need to ...",
+    "saveassignUser": "Save"
   },
   "newForm": {
     "btn": {
@@ -485,6 +487,16 @@
         },
         "number": "likes",
         "title": "Likes"
+      },
+      "speakingtime": {
+        "title": "Speaking Time",
+        "person": "Add person",
+        "record": "Record",
+        "name": "Name",
+        "date_init": "Start date",
+        "date_end": "End date",
+        "duration": "Duration",
+        "save": "Add to list"
       }
     },
     "share": {

@@ -1,0 +1,71 @@
+<div class="flex-container-row">
+  <div>
+      <h2 translate>project.section.speakingtime.title</h2>
+  </div>
+  <div>
+    <button class="speaking-register-button btn-raised btn-block i-calendar"
+            ui-set="{'modal.registerSpeakingtime': 'registerSpeakingtime'}"
+            analytics-on="click"
+            analytics-category="Invite to project"
+            analytics-event="Click invite button at participants"
+            translate>
+    </button>
+  </div>
+</div>
+<div >
+  <div class="media" ng-repeat="turn in project.speakingtime | limitTo:3">
+    <div class="media-left">
+      <img ng-if="turn.state === 'ready'" src="images/play2.png" ng-click="stopSpeakTime()">
+      <img ng-if="turn.state === 'wait'" src="images/timer.png">
+      <span class="icon-count-number">{{ turn.name }}</span>
+    </div>
+  </div>
+  <div class="new-need-comment">
+    <form class="new-need-comment-send" ng-submit="takeSpeaktime()">
+      <div class="form-group">
+        <div class="input-group input-group-sm">
+          <textarea class="form-control"
+                    rows="1" hide-tabs
+                    ng-model="turn.name"
+                    placeholder="{{ 'project.section.speakingtime.person' | translate}}"
+                    ng-keydown="keyDown($event)">
+          </textarea>
+          <button  type="submit" class="invite-button btn btn-primary btn-raised btn-block i-send"
+              translate>
+            project.section.speakingtime.save
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div ui-content-for="registerSpeakingtimeModal">
+  <modal name="registerSpeakingtime">
+    <header translate>project.section.speakingtime.title</header>
+    <main>
+      <table class="table">
+        <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Start Date
+        </th>
+        <th>
+          End Date
+        </th>
+        <!-- <th>
+          project.section.speakingtime.duration
+        </th> -->
+      </tr>
+        <tr ng-repeat="register in project.registerspeakingtime">
+          <td>{{ register.name }}</td>
+          <td>{{ register.time | amUtc | amDateFormat:'MM/DD/YYYY HH:mm:ss' }}</td>
+          <td>{{ register.timefinish | amUtc | amDateFormat:'MM/DD/YYYY HH:mm:ss' }}</td>
+          <!-- <td>{{ register.timeDiference }}</td> -->
+        </tr>
+      </table>
+    </main>
+  </modal>
+</div>

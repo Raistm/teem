@@ -1,8 +1,7 @@
 <div class="list-group-item need-item"
      ng-if="project.isParticipant() || need.completed !== 'add'"
      ng-class="'need-item-completed-' + need.completed">
-  <div class="need-body flex-container-row"
-       ng-click="toggleCommentsVisibility(need)">
+  <div class="need-body flex-container-row">
     <form class="flex-container">
       <div class="form-group need-form" ng-class="isNewNeed(need)? 'notify-need':''">
         <div class="checkbox" ng-if="need.completed !== 'add'">
@@ -32,10 +31,19 @@
         </div>
       </div>
     </form>
-    <div ng-if="need.completed !== 'add'" class="{{need.comments.length ? 'active' : ''}}">
+    <div ng-if="need.completed !== 'add'" class="{{need.comments.length ? 'active' : ''}}"
+         ng-click="toggleCommentsVisibility(need)">
       <span class="icon-count">
         <i class="i-comment" ng-class="newComments(need)? 'notify-comments':''">
           <span class="icon-count-number">{{ need.comments && need.comments.length || 0 }}</span>
+        </i>
+      </span>
+    </div>
+    <div ng-if="need.completed !== 'add'" class="{{need.userAssigned.length ? 'active' : ''}}"
+         ng-click="toggleAssigTaskToUserVisibility(need)">
+      <span class="icon-count">
+        <i class="i-community" ng-class="'notify-comments'">
+          <span class="icon-count-number">{{ need.userAssigned && need.userAssigned.users.length + need.userAssigned.email.length || 0 }}</span>
         </i>
       </span>
     </div>
@@ -72,3 +80,22 @@
       </form>
     </div>
   </div>
+  <div class="need-comments" ng-show="areAssigTaskToUserVisible(need) && need.completed !== 'add'">
+    <div avatars="need.userAssigned.users" avatars-conf="{size: 'xsmall'}" class="avatars"></div>
+    <div lass="media">
+      <span ng-repeat="name in need.userAssigned.names"> {{name.name}}, </span>
+    </div>
+    <div class="new-need-comment">
+              <selector multiple
+                config="userSelectorConfig"
+                options="invite.list" ng-model="invite.selected"
+                placeholder=" 'need.assignUser' | translate">
+              </selector>
+              <button type="submit" class="invite-button btn btn-primary btn-raised btn-block i-send"
+                      ng-click="addUser()"
+                      analytics-on="click" translate>
+                      need.saveassignUser
+              </button>
+    </div>
+  </div>
+</div>

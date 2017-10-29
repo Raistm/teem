@@ -18,13 +18,20 @@ angular.module('Teem')
   }])
   .directive(
     'needDisplay',
-    function(SessionSvc, ProjectsSvc, $route){
+    function(SessionSvc, ProjectsSvc, $route, Selector){
       return {
         require: '^needList',
         scope: {
           need: '='
         },
         link: function (scope, element, attrs, needsCtrl) {
+
+          // LF : creamos la variable invite con una lista de miembros de teem para invitar y la lista de seleccionados
+          scope.invite = {
+            list : [],
+            selected : []
+          };
+
           scope.toggleCompleted = function (need, event) {
             // Needed by the magic of material design
             event.preventDefault();
@@ -54,6 +61,7 @@ angular.module('Teem')
             ProjectsSvc.findByUrlId($route.current.params.id).then(
               function(project){
                 scope.project = project;
+                Selector.populateUserSelector(scope.invite.list, scope.project.communities);
               }
             );
           });
@@ -70,7 +78,12 @@ angular.module('Teem')
 
           scope.keyDown = function(event){
             if (event.which === 13) { // enter
-              scope.sendComment();
+              if ( scope.newComment.text !== '') {
+                scope.sendComment();
+              }
+              if (scope.assignUserToTask.name !== '') {
+                scope.addUser();
+              }
 
               // Do not add new line to comment input
               event.preventDefault();
@@ -85,11 +98,16 @@ angular.module('Teem')
             needsCtrl.toggleCommentsVisibility(n);
           };
 
+          scope.toggleAssigTaskToUserVisibility = function(n){
+            needsCtrl.toggleAssigTaskToUserVisibility(n);
+          };
+
           scope.newComment = {
             text: ''
           };
 
           scope.areCommentsVisible = needsCtrl.areCommentsVisible;
+          scope.areAssigTaskToUserVisible = needsCtrl.areAssigTaskToUserVisible;
 
           scope.sendComment = function(){
             SessionSvc.loginRequired(scope, function() {
@@ -108,6 +126,28 @@ angular.module('Teem')
             var prevAccess = new Date(scope.project.getTimestampAccess().needs.prev);
             var lastComment = new Date(need.comments[need.comments.length -1].time);
             return prevAccess < lastComment;
+          };
+
+          scope.assignTaskToUser = function(need){
+            if (!need.userAssigned || !scope.project || !scope.project.isParticipant()){
+              return false;
+            }
+
+            var prevAccess = new Date(scope.project.getTimestampAccess().needs.prev);
+            var lastComment = new Date(need.userAssigned[need.userAssigned.length -1].time);
+            return prevAccess < lastComment;
+          };
+
+          scope.userSelectorConfig = Selector.config.userToTask;
+
+          scope.addUser = function(){
+            var result;
+            SessionSvc.loginRequired(scope, function() {
+              result = Selector.assignTask(scope.invite.selected, scope.project);
+              scope.invite.selected = [];
+              console.log(result);
+              scope.project.addUserToTask(scope.need, result.users, result.names);
+            }, undefined, scope.project.synchPromise());
           };
 
           scope.isNewNeed = function(need){
@@ -137,16 +177,32 @@ angular.module('Teem')
           needs: '='
         },
         controller: function($scope, $route, SessionSvc, ProjectsSvc, time) {
+
+
           this.comments = {};
+          this.userAssigned = {};
 
           var comments = this.comments;
 
+          var userAssigned = this.userAssigned;
+
           this.toggleCommentsVisibility = function toggleCommentsVisibility(need) {
             comments.visible = (comments.visible === need) ? null : need;
+            userAssigned.visible = null;
           };
+
+          this.toggleAssigTaskToUserVisibility = function toggleAssigTaskToUserVisibility(need) {
+            comments.visible = null;
+            userAssigned.visible  = (userAssigned.visible  === need) ? null : need;
+          };
+
 
           this.areCommentsVisible = function areCommentsVisible(need) {
             return comments.visible === need;
+          };
+
+          this.areAssigTaskToUserVisible = function areAssigTaskToUserVisible(need) {
+            return userAssigned.visible === need;
           };
 
           this.hour = function(comment) {

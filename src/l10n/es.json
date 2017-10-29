@@ -208,7 +208,9 @@
       "done": "Hechas",
       "todo": "Para hacer"
     },
-    "tip": "Esto es lo que necesitamos para llevar a cabo el proyecto"
+    "tip": "Esto es lo que necesitamos para llevar a cabo el proyecto",
+    "assignUser": "Asignar tarea a ...",
+    "saveassignUser": "Guardar"
   },
   "newForm": {
     "btn": {
@@ -484,7 +486,18 @@
           "undo": "No me gusta"
         },
         "number": "me gusta",
-        "title": "Me gusta"
+        "title": "Me gusta",
+        "record": "Historial"
+      },
+      "speakingtime": {
+        "title": "Turnos de palabra",
+        "person": "Añadir persona",
+        "record": "Record",
+        "name": "Name",
+        "date_init": "Start date",
+        "date_end": "End date",
+        "duration": "Duration",
+        "save": "Añadir a la lista"
       }
     },
     "share": {

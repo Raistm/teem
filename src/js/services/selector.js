@@ -103,7 +103,7 @@ angular.module('Teem')
             regex = new RegExp('^' + REGEX_EMAIL + '$', 'i');
             match = input.match(regex);
             if (match){
-              return !this.options.hasOwnProperty(match[0]);
+              return !this.options.hasOwnProperty(input);
             }
             return false;
           },
@@ -113,6 +113,61 @@ angular.module('Teem')
               nick: input,
               _id: JSON.stringify({
                 email: input
+              })
+            };
+          },
+          onDropdownOpen(dropdown){
+            dropdown[0].scrollIntoView();
+          },
+          closeAfterSelect: true,
+          render: {
+            item: function(i,e){
+              return renderAvatar(i, e, 'item');
+            },
+            option: function(i,e){
+              return renderAvatar(i, e, 'option');
+            }
+          },
+        },
+        userToTask: {
+          plugins: ['remove_button'],
+          valueField:'_id',
+          labelField:'nick',
+          searchField:'nick',
+          autocapitalize: 'off',
+          load: function(query, callback){
+            if (!query.length) {
+              return callback();
+            }
+            User.usersLike(query)
+            .then(function(r){
+              callback(buildUserItems(r));
+              $timeout();
+            }, function(){
+              callback();
+              $timeout();
+            });
+          },
+          //code based on https://selectize.github.io/selectize.js/ email example
+          createFilter: function(input){
+            var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
+            '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
+
+            var match, regex;
+
+            regex = new RegExp('^' + REGEX_EMAIL + '$', 'i');
+            match = input.match(regex);
+            if (!match){
+              return true;
+            }
+            return false;
+          },
+          //code based on https://selectize.github.io/selectize.js/ email example
+          create: function(input){
+            return {
+              nick: input,
+              _id: JSON.stringify({
+                name: input
               })
             };
           },
@@ -210,6 +265,42 @@ angular.module('Teem')
             }
           }
         }
+      },
+
+      assignTask: function(invitees, hasParticipantsObject){
+        var users  = [],
+            names = [];
+        if (invitees){
+
+          let notificationScope = $rootScope.$new(true);
+          notificationScope.values = {};
+
+          invitees.forEach(function(i){
+
+            var value;
+
+            try {
+              value = JSON.parse(i);
+            }
+            // if it is an existing user
+            catch (e) {
+              hasParticipantsObject.addParticipant(i);
+              users.push(i);
+              return;
+            }
+
+            // if it is an nick or name of person
+            if (typeof value === 'object'){
+              if (value.name) {
+                names.push(value.name);
+              }
+            }
+          });
+        }
+        return {
+          users: users,
+          names: names
+        };
       }
     };
 

@@ -134,7 +134,7 @@ angular.module('Teem')
         then(function(project) {
           $scope.project = project;
           Selector.populateUserSelector($scope.invite.list, $scope.project.communities);
-
+          console.log('Invite list', $scope.invite.list);
           $rootScope.og = {
             title: project.title,
             description: project.pad.text().substring(0, 200),
@@ -390,6 +390,7 @@ angular.module('Teem')
 
     $scope.inviteUsers = function(){
       Selector.invite($scope.invite.selected, $scope.project);
+      console.log('Invite list', $scope.invite.selected);
       $scope.invite.selected = [];
       SharedState.turnOff('modal.share');
       SharedState.turnOff('modal.invite');
@@ -415,6 +416,34 @@ angular.module('Teem')
         return false;
       }
 
+    };
+
+    $scope.turn = {name: ''};
+
+    $scope.takeSpeaktime = function () {
+        $scope.project.addTurn($scope.turn.name);
+        $scope.turn.name = '';
+    };
+
+    $scope.stopSpeakTime = function () {
+      $scope.project.nextTurn();
+    };
+
+    $scope.closeModal = function(){
+      $scope.invite.selected = [];
+      SharedState.turnOff('modal.share');
+      SharedState.turnOff('modal.register');
+    };
+
+    $scope.keyDown = function(event){
+      if (event.which === 13) { // enter
+        $scope.project.addTurn($scope.turn.name);
+
+        $scope.turn.name = '';
+
+        // Do not add new line to comment input
+        event.preventDefault();
+      }
     };
 
     $scope.archiveProject = function() {
