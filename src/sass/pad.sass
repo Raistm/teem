@@ -53,6 +53,8 @@
       outline: 0
   need-widget
     display: block
+  orderday-widget
+    display: block
   .need-missing-message
     @extend .alert
     @extend .alert-danger
@@ -65,6 +67,10 @@
       font-size: 1em
   .need-text-readonly
     padding-top: 2px
+  .orderday-missing-message
+    @extend .alert
+    @extend .alert-danger
+    padding: 5px
 
 .pad-link-icon
   padding-left: 25px
@@ -85,6 +91,10 @@
 .widget.need
   min-height: 35px
   margin-top: 5px
+
+  .widget.orderday
+    min-height: 35px
+    margin-top: 5px
 
 .widget.img img
   max-width: 100%

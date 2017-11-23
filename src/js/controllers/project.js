@@ -446,6 +446,10 @@ angular.module('Teem')
       }
     };
 
+    $scope.updateSelection = function ($event, heading) {
+      $scope.project.toggleorderdayCompleted (heading);
+    }
+
     $scope.archiveProject = function() {
       // TODO
     };
