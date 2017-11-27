@@ -17,9 +17,9 @@ angular.module('Teem')
       },
       controller: [
         'SessionSvc', '$rootScope', '$scope', '$route', '$location',
-        '$timeout', 'SharedState', 'needWidget', '$element',
+        '$timeout', 'SharedState', 'needWidget', 'orderdayWidget', '$element',
         function(SessionSvc, $rootScope, $scope, $route, $location,
-        $timeout, SharedState, needWidget, $element) {
+        $timeout, SharedState, needWidget, orderdayWidget, $element) {
 
           $scope.editor = this.editor;
 
@@ -66,6 +66,7 @@ angular.module('Teem')
 
           $scope.padWidgets = {
             'need': needWidget.getWidget($scope),
+            'orderday': orderdayWidget.getWidget($scope),
             'img': {
               onInit: imgWidget,
               onChangeState: imgWidget
@@ -143,7 +144,6 @@ angular.module('Teem')
           }
 
           $scope.padCreate = function(editor) {
-            console.log(editor);
 
             $scope.linkModal = {
               add: function(event) {
@@ -159,7 +159,6 @@ angular.module('Teem')
 
                 $scope.linkModal.range = range;
                 $scope.linkModal.annotation = annotation;
-                console.log(range);
                 let clientRect = range.node.nextSibling ?
                   range.node.nextSibling.getBoundingClientRect() :
                   range.node.parentElement.getBoundingClientRect();
@@ -228,6 +227,9 @@ angular.module('Teem')
             $scope.widget = function(type) {
               if (type === 'need') {
                 needWidget.add(editor, $scope);
+              }
+              if (type === 'orderday') {
+                orderdayWidget.add(editor, $scope);
               }
               if (type === 'img') {
                 if (arguments[1] === undefined) { // First step

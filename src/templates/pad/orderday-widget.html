@@ -1,0 +1,27 @@
+<span class="orderday-missing" ng-if="project && !orderday">
+  <i class="i-orderday-missing"></i> <span class="orderday-missing-message" translate>pad.orderday.missing</span>
+</span>
+
+
+<form ng-if="orderday">
+  <div class="form-group orderday-form" ng-class="'orderday-form-' + need._id">
+    <div class="checkbox">
+      <label ng-click="toggleorderdayCompleted(orderday, $event)">
+        <input type="checkbox" ng-checked="orderday.completed === 'true'">
+      </label>
+    </div>
+    <div class="orderday-name">
+      <textarea ng-if="project.isParticipant()"
+                class="form-control"
+                rows="1"
+                autosize
+                ng-class="orderday.completed === 'true' ? 'text-strike' : ''"
+                ng-model="orderday.text"
+                placeholder="{{ 'Punto del día' | translate }}">
+      </textarea>
+      <div ng-if="!project.isParticipant()" class="section-text-readonly" ng-class="orderday.completed === 'true' ? 'text-strike' : ''">
+        {{ orderday.text }}
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,17 +1,17 @@
 'use strict';
 
 angular.module('Teem')
-  .factory('needWidget', [
+  .factory('orderdayWidget', [
   '$compile', '$timeout',
   function($compile, $timeout) {
 
     function getWidget (scope) {
 
       return {
-        onInit: function(parent, needId) {
-          var element = angular.element(document.createElement('need-widget')),
+        onInit: function(parent, orderdayId) {
+          var element = angular.element(document.createElement('orderday-widget')),
               compiled = $compile(element)(scope),
-              need = scope.project.findNeed(needId),
+              orderday = scope.project.findorderday(orderdayId),
               stopEvents = ['keypress', 'keyup', 'keydown', 'paste'],
               isolateScope;
 
@@ -28,47 +28,50 @@ angular.module('Teem')
             isolateScope = element.isolateScope();
 
             isolateScope.project = scope.project;
-            isolateScope.need = need;
+            isolateScope.orderday = orderday;
           });
 
           // Wait for the directive to be compiled before adding it
           $timeout(() => {
             angular.element(parent).append(compiled);
-            // on blur, bump need version to generate SwellRT event
+            // on blur, bump orderday version to generate SwellRT event
             compiled[0].querySelector('textarea').addEventListener('blur', function(){
-              need.version =
-                ((parseInt(need.version) || 0) + 1).toString();
+              orderday.version =
+                ((parseInt(orderday.version) || 0) + 1).toString();
             });
           });
 
+        },
+        onDeactivated: function(element) {
+          scope.project.removeoderday(element.dataset.orderday);
         }
       };
     }
 
     function add (editor, scope) {
-      var need = {
+      var orderday = {
             text: ''
           },
           selection = editor.getSelection(),
           widget;
 
       if (selection.text) {
-        need.text = selection.text;
+        orderday.text = selection.text;
         editor.deleteText(selection);
       }
 
-      need = scope.project.addNeed(need);
+      orderday = scope.project.addorderday(orderday);
 
 
-      // To generate need added event after all the info is available
+      // To generate orderday added event after all the info is available
       $timeout();
 
       if (selection.text) {
-            need.version = '1';
+            orderday.version = '1';
       }
 
       $timeout(() => {
-        widget = editor.addWidget('need', need._id);
+        widget = editor.addWidget('orderday', orderday._id);
       });
 
       $timeout(() => {

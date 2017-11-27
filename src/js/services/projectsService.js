@@ -318,6 +318,12 @@ angular.module('Teem')
         })[0];
       }
 
+      findorderday (id) {
+        return this.orderdayList.filter(function (need) {
+          return need._id === id;
+        })[0];
+      }
+
       addNeed(need) {
 
         // Quick dirty hack until SwellRT provides ids for array elements
@@ -331,6 +337,27 @@ angular.module('Teem')
         this.setTimestampAccess('needs', true);
 
         return need;
+      }
+
+      addorderday(orderday) {
+        // Quick dirty hack until SwellRT provides ids for array elements
+        orderday._id = Math.random().toString().substring(2);
+        orderday.author = SessionSvc.users.current();
+        orderday.time = (new Date()).toJSON();
+        orderday.completed = 'false';
+        orderday.person = orderday.author;
+
+        this.orderdayList.push(orderday);
+        this.setTimestampAccess('orderdayList', true);
+
+        return orderday;
+      }
+
+      removeoderday(id) {
+        var index = this.orderdayList.findIndex(orderday => orderday._id === id);
+        if (index !== -1) {
+          this.orderdayList.splice(index, 1);
+        }
       }
 
       toggleNeedCompleted (need) {
@@ -348,6 +375,24 @@ angular.module('Teem')
           need.completionDate = (new Date()).toJSON();
         } else {
           delete need.completionDate;
+        }
+      }
+
+      toggleorderdayCompleted (orderday) {
+        var newStatus;
+
+        if (! this.isParticipant()) {
+          return;
+        }
+
+        newStatus = orderday.completed !== 'true';
+
+        orderday.completed = newStatus.toString();
+
+        if (newStatus) {
+          orderday.completionDate = (new Date()).toJSON();
+        } else {
+          delete orderday.completionDate;
         }
       }
 
@@ -662,6 +707,7 @@ angular.module('Teem')
           proxyProj.shareMode = 'public';
           proxyProj.speakingtime = [];
           proxyProj.registerspeakingtime = [];
+          proxyProj.orderdayList = [];
           d.resolve(proxyProj);
         });
       });
