@@ -279,6 +279,7 @@
       "need": "Insertar tarea",
       "text_fields": "Puntos del día",
       "highlightText": "Marcar para resumen",
+      "orderday": "Añadir a puntos del día",
       "format_bold": "Negrita",
       "format_italic": "Cursiva",
       "format_strikethrough": "Tachado",

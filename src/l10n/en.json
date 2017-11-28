@@ -266,7 +266,7 @@
       "missing": "This task was deleted"
     },
     "orderday": {
-      "missing": "This point of the day  was deleted"
+      "missing": "This point of the day was deleted"
     },
     "placeholder": "Share here how to participate in your activity or project: \n • how to start contributing, \n •  what do you task and what has to be done, \n •  the links to the tools you use...",
     "outline": {
@@ -279,6 +279,7 @@
       "need": "Insert task",
       "text_fields": "Heading",
       "highlightText": "Add to summary",
+      "orderday": "Add to agenda",
       "format_bold": "Bold",
       "format_italic": "Italic",
       "format_strikethrough": "Strikethrough",

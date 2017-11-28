@@ -42,9 +42,10 @@ angular.module('Teem')
           });
 
         },
-        onDeactivated: function(element) {
-          scope.project.removeoderday(element.dataset.orderday);
-        }
+        //If we want to deactivate the order when we mark it
+        /*onDeactivated: function(element) {
+          scope.project.removeorderday(element.dataset.orderday);
+        }*/
       };
     }
 

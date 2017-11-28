@@ -353,12 +353,13 @@ angular.module('Teem')
         return orderday;
       }
 
-      removeoderday(id) {
+      //If we want to remove the order of the day when we reenter on project
+      /*removeorderday(id) {
         var index = this.orderdayList.findIndex(orderday => orderday._id === id);
         if (index !== -1) {
           this.orderdayList.splice(index, 1);
         }
-      }
+      }*/
 
       toggleNeedCompleted (need) {
         var newStatus;
