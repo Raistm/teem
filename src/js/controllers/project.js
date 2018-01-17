@@ -134,7 +134,6 @@ angular.module('Teem')
         then(function(project) {
           $scope.project = project;
           Selector.populateUserSelector($scope.invite.list, $scope.project.communities);
-          console.log('Invite list', $scope.invite.list);
           $rootScope.og = {
             title: project.title,
             description: project.pad.text().substring(0, 200),
@@ -390,7 +389,6 @@ angular.module('Teem')
 
     $scope.inviteUsers = function(){
       Selector.invite($scope.invite.selected, $scope.project);
-      console.log('Invite list', $scope.invite.selected);
       $scope.invite.selected = [];
       SharedState.turnOff('modal.share');
       SharedState.turnOff('modal.invite');

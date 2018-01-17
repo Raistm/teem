@@ -145,7 +145,6 @@ angular.module('Teem')
             SessionSvc.loginRequired(scope, function() {
               result = Selector.assignTask(scope.invite.selected, scope.project);
               scope.invite.selected = [];
-              console.log(result);
               scope.project.addUserToTask(scope.need, result.users, result.names);
             }, undefined, scope.project.synchPromise());
           };

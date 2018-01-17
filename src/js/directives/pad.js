@@ -17,9 +17,9 @@ angular.module('Teem')
       },
       controller: [
         'SessionSvc', '$rootScope', '$scope', '$route', '$location',
-        '$timeout', 'SharedState', 'needWidget', 'orderdayWidget', '$element',
+        '$timeout', 'SharedState', 'needWidget', 'orderdayWidget', 'voteWidget', '$element',
         function(SessionSvc, $rootScope, $scope, $route, $location,
-        $timeout, SharedState, needWidget, orderdayWidget, $element) {
+        $timeout, SharedState, needWidget, orderdayWidget, voteWidget, $element) {
 
           $scope.editor = this.editor;
 
@@ -67,6 +67,7 @@ angular.module('Teem')
           $scope.padWidgets = {
             'need': needWidget.getWidget($scope),
             'orderday': orderdayWidget.getWidget($scope),
+            'vote': voteWidget.getWidget($scope),
             'img': {
               onInit: imgWidget,
               onChangeState: imgWidget
@@ -98,7 +99,7 @@ angular.module('Teem')
               }, //Será un styleClass
 
               onAdd: function(range) {
-                console.log("onAdd de Highlight recibido");
+                console.log('onAdd de Highlight recibido');
                 var highlightsActasPr = this.editor.getAnnotationInRange(range, 'highlightActas');
                 $scope.pad.highlight = this.editor.getAnnotationSet('highlightActas');
                 console.log(this.editor.getAnnotationSet('highlightActas'));
@@ -106,13 +107,13 @@ angular.module('Teem')
               },
 
               onChange: function() {
-                console.log("Higlight cambiado, recibido");
+                console.log('Higlight cambiado, recibido');
                 $scope.pad.highlight = this.editor.getAnnotationSet('highlightActas');
                 $timeout();
               },
 
               onRemove: function() {
-                console.log("onRemove de Highlight recibido");
+                console.log('onRemove de Highlight recibido');
                 $scope.pad.highlight = this.editor.getAnnotationSet('highlightActas');
                 console.log(this.editor.getAnnotationSet('highlightActas'));
                 $timeout();
@@ -230,6 +231,9 @@ angular.module('Teem')
               }
               if (type === 'orderday') {
                 orderdayWidget.add(editor, $scope);
+              }
+              if (type === 'vote') {
+                voteWidget.add(editor, $scope);
               }
               if (type === 'img') {
                 if (arguments[1] === undefined) { // First step

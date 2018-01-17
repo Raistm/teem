@@ -1,0 +1,42 @@
+<span class="vote-missing" ng-if="project && !vote">
+  <i class="i-vote-missing"></i> <span class="vote-missing-message" translate>pad.vote.missing</span>
+</span>
+
+<form ng-if="vote">
+  <div class="form-group vote-form" ng-class="'vote-form-' + vote._id">
+    <div class="vote-name">
+      <textarea ng-if="project.isParticipant()"
+                class="form-control"
+                rows="1"
+                ng-model="vote.text"
+                placeholder="{{ 'vote.new.placeholder' | translate }}">
+      </textarea>
+    </div>
+    <div>
+      <table class="table">
+        <tr>
+        <th translate>
+          vote.thumbUp.title
+        </th>
+        <th translate>
+          vote.thumbDown.title
+        </th>
+        <th translate>
+          vote.thumbsUpDown.title
+        </th>
+      </tr>
+        <tr >
+          <td><input class="vote-input-number" type="number" ng-model="vote.thumbUp"></input></td>
+          <td><input class="vote-input-number" type="number"  ng-model="vote.thumbDown"></input></td>
+          <td><input class="vote-input-number" type="number"  ng-model="vote.thumbsUpDown"></input></td>
+        </tr>
+      </table>
+    </div>
+    <div class="vote-button">
+       <button class="invite-button btn btn-primary btn-raised" ng-click="sendVote(vote, $event)" >
+         <img src="/images/ballot_box18x18.png" width="5%" height="100%"/>
+         <span translate>vote.icon</span>
+       </button>
+    </div>
+  </div>
+</form>
