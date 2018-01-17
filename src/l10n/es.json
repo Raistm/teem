@@ -277,9 +277,9 @@
       "link": "Insertar enlace",
       "img": "Insertar image",
       "need": "Insertar tarea",
-      "text_fields": "Puntos del día",
+      "text_fields": "Título",
       "highlightText": "Marcar para resumen",
-      "orderday": "Añadir a puntos del día",
+      "orderday": "Punto del día",
       "format_bold": "Negrita",
       "format_italic": "Cursiva",
       "format_strikethrough": "Tachado",
@@ -288,7 +288,11 @@
       "format_align_right": "Alinear a la derecha",
       "format_list_bulleted": "Lista no ordenada",
       "format_list_numbered": "Lista ordenada",
-      "clearFormat": "Limpiar formato"
+      "clearFormat": "Limpiar formato",
+      "vote": "Votación"
+    },
+    "vote": {
+      "missing": "Esta votación se ha borrado"
     }
   },
   "picture": {
@@ -499,10 +503,13 @@
         "person": "Añadir persona",
         "record": "Record",
         "name": "Name",
-        "date_init": "Start date",
-        "date_end": "End date",
-        "duration": "Duration",
-        "save": "Añadir a la lista"
+        "date_init": "Inicio",
+        "date_end": "Fin",
+        "duration": "Tiempo hablado",
+        "save": "Añadir a la lista",
+        "add": "Añadir turno de palabra",
+        "next": "Pasar al siguiente turno de palabra",
+        "viewregister": "Historial de turnos de palabra"
       }
     },
     "share": {
@@ -689,5 +696,20 @@
     "slide1": "Explora lo que la gente está haciendo en tu comunidad",
     "slide2": "Propón tu proyecto, encuentra apoyos y colaboradores",
     "slide3": "Trabaja en tu proyecto y expón tus tareas"
+  },
+  "vote": {
+    "new": {
+      "placeholder": "Asunto de la votación"
+    },
+    "thumbUp": {
+        "title" : "Votos a favor"
+    },
+    "thumbDown": {
+        "title" : "Votos en contra"
+    },
+    "thumbsUpDown": {
+        "title" : "Abstenciones"
+    },
+    "icon": "Registar votacion"
   }
 }

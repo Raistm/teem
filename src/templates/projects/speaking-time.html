@@ -1,44 +1,62 @@
-<div class="flex-container-row">
-  <div>
-      <h2 translate>project.section.speakingtime.title</h2>
+<div class="pad-toolbar">
+  <div class="title-speakingtime">
+    <h2 translate>project.section.speakingtime.title</h2>
   </div>
-  <div>
-    <button class="speaking-register-button btn-raised btn-block i-assignment-turned-in"
+  <div class="btn-toolbar">
+    <button type="button" class="btn btn-raised btn-link btn-xs"
+            ui-set="{'modal.addSpeakingtimeModal': 'addSpeakingtimeModal'}"
+            analytics-on="click"
+            uib-tooltip="{{'project.section.speakingtime.add' | translate}}" tooltip-append-to-body="true">
+      <i class="material-icons">playlist_add</i>
+    </button>
+    <button type="button" ng-click="stopSpeakTime()" class="btn btn-raised btn-link btn-xs"
+            uib-tooltip="{{'project.section.speakingtime.next' | translate}}" tooltip-append-to-body="true">
+      <i class="material-icons">playlist_play</i>
+    </button>
+    <button type="button" class="btn btn-raised btn-link btn-xs"
             ui-set="{'modal.registerSpeakingtime': 'registerSpeakingtime'}"
             analytics-on="click"
-            analytics-category="Invite to project"
-            analytics-event="Click invite button at participants"
-            translate>
+            uib-tooltip="{{'project.section.speakingtime.viewregister' | translate}}" tooltip-append-to-body="true">
+      <i class="material-icons">view_list</i>
     </button>
   </div>
-</div>
-<div >
-  <div class="media" ng-repeat="turn in project.speakingtime | limitTo:3">
-    <div class="media-left">
-      <img ng-if="turn.state === 'ready'" src="images/play2.png" ng-click="stopSpeakTime()">
-      <img ng-if="turn.state === 'wait'" src="images/timer.png">
-      <span class="icon-count-number">{{ turn.name }}</span>
+  <div>
+    <div class="media" ng-repeat="turn in project.speakingtime | limitTo:1">
+      <div class="media-left">
+        <img ng-if="turn.state === 'ready'" src="images/play2.png" ng-click="stopSpeakTime()">
+        <span class="icon-count-number">{{ turn.name }}</span>
+      </div>
     </div>
   </div>
-  <div class="new-need-comment">
-    <form class="new-need-comment-send" ng-submit="takeSpeaktime()">
-      <div class="form-group">
-        <div class="input-group input-group-sm">
-          <textarea class="form-control"
-                    rows="1" hide-tabs
-                    ng-model="turn.name"
-                    placeholder="{{ 'project.section.speakingtime.person' | translate}}"
-                    ng-keydown="keyDown($event)">
-          </textarea>
-          <button  type="submit" class="invite-button btn btn-primary btn-raised btn-block i-send"
-              translate>
-            project.section.speakingtime.save
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
 </div>
+
+
+ <div ui-content-for="addSpeakingtimeModal">
+   <modal name="addSpeakingtimeModal">
+     <header translate>project.section.speakingtime.title</header>
+     <main>
+         <div class="media" ng-repeat="turn in project.speakingtime | limitTo:10">
+           <div class="media-left">
+             <img ng-if="turn.state === 'ready'" src="images/play2.png" ng-click="stopSpeakTime()">
+             <img ng-if="turn.state === 'wait'" src="images/timer.png">
+             <span class="icon-count-number">{{ turn.name }}</span>
+           </div>
+         </div>
+     </main>
+     <footer>
+       <textarea class="form-control"
+                 rows="1" hide-tabs
+                 ng-model="turn.name"
+                 placeholder="{{ 'project.section.speakingtime.person' | translate}}"
+                 ng-keydown="keyDown($event)">
+       </textarea>
+       <button  type="submit" class="invite-button btn btn-primary btn-raised btn-block i-send"
+           translate>
+         project.section.speakingtime.save
+       </button>
+     </footer>
+   </modal>
+ </div>
 
 <div ui-content-for="registerSpeakingtimeModal">
   <modal name="registerSpeakingtime">

@@ -508,6 +508,45 @@ angular.module('Teem')
         this.speakingtime[0] = newFirst;
         this.setTimestampAccess('registerspeakingtime', true);
       }
+
+      findvote (id) {
+        return this.voteList.filter(function (vote) {
+          return vote._id === id;
+        })[0];
+      }
+
+      sendVote(vote) {
+
+        var status;
+
+        if (! this.isParticipant()) {
+          return;
+        }
+
+        status = vote.completed !== 'true';
+
+        vote.completed = status.toString();
+
+        if (status) {
+          vote.completionDate = (new Date()).toJSON();
+        }
+
+        this.setTimestampAccess('voteList', true);
+
+        return vote;
+      }
+
+      addVote(vote) {
+        vote._id = Math.random().toString().substring(2);
+        vote.author = SessionSvc.users.current();
+        vote.time = (new Date()).toJSON();
+        vote.completed = 'false';
+        vote.person = vote.author;
+        this.voteList.push(vote);
+        this.setTimestampAccess('voteList', true);
+
+        return vote;
+      }
     }
 
     // Service functions //
@@ -709,6 +748,7 @@ angular.module('Teem')
           proxyProj.speakingtime = [];
           proxyProj.registerspeakingtime = [];
           proxyProj.orderdayList = [];
+          proxyProj.voteList = [];
           d.resolve(proxyProj);
         });
       });

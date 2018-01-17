@@ -288,7 +288,11 @@
       "format_align_right": "Align right",
       "format_list_bulleted": "Unordered list",
       "format_list_numbered": "Ordered list",
-      "clearFormat": "Clear format"
+      "clearFormat": "Clear format",
+      "vote": "Voting"
+    },
+    "vote": {
+      "missing": "This vote has been deleted"
     }
   },
   "picture": {
@@ -501,7 +505,10 @@
         "date_init": "Start date",
         "date_end": "End date",
         "duration": "Duration",
-        "save": "Add to list"
+        "save": "Add to list",
+        "add": "Add turn",
+        "next": "Next turn",
+        "viewregister": "History"
       }
     },
     "share": {
@@ -688,5 +695,20 @@
     "slide1": "See what people in your community have done",
     "slide2": "Pitch your project, find support and collaborators",
     "slide3": "Work on your project and post your task"
+  },
+  "vote": {
+    "new": {
+      "placeholder": "Subject of the vote"
+    },
+    "thumbUp": {
+        "title" : "votes in favor"
+    },
+    "thumbDown": {
+        "title" : "votes against"
+    },
+    "thumbsUpDown": {
+        "title" : "Abstentions"
+    },
+    "icon": "Register voting"
   }
 }

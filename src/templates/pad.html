@@ -15,7 +15,10 @@
           <i class="material-icons">check_box</i>
         </button>
         <button type="button" ng-click="widget('orderday')" class="btn btn-raised btn-link btn-xs" uib-tooltip="{{'pad.tooltip.orderday' | translate}}" tooltip-append-to-body="true">
-          <i class="material-icons">title</i>
+          <i class="material-icons">view_list</i>
+        </button>
+        <button type="button" ng-click="widget('vote')" class="btn btn-raised btn-link btn-xs" uib-tooltip="{{'pad.tooltip.vote' | translate}}" tooltip-append-to-body="true">
+          <i class="material-icons">pan_tool</i>
         </button>
         <button ng-repeat="(btn, isActive) in buttons" type="button" ng-click="annotate(btn)" class="btn btn-raised btn-link btn-xs" ng-class="{'active': isActive}" uib-tooltip="{{'pad.tooltip.'+btn | translate}}" tooltip-append-to-body="true">
           <i class="material-icons">{{btn}}</i>
