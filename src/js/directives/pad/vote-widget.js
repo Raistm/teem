@@ -12,10 +12,9 @@ angular.module('Teem')
           event.stopPropagation();
           // Needed by the magic of material design
           event.preventDefault();
-          vote.thumbDown = vote.thumbDown.toString();
-          vote.thumbsUpDown = vote.thumbsUpDown.toString();
-          vote.thumbUp = vote.thumbUp.toString();
-          $scope.project.sendVote(vote);
+          vote.thumbDown = Number(vote.thumbDown);
+          vote.thumbsUpDown = Number(vote.thumbsUpDown);
+          vote.thumbUp = Number(vote.thumbUp); $scope.project.sendVote(vote);
         };
       }],
       templateUrl: 'pad/vote-widget.html'

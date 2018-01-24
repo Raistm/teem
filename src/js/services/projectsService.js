@@ -517,19 +517,13 @@ angular.module('Teem')
 
       sendVote(vote) {
 
-        var status;
-
         if (! this.isParticipant()) {
           return;
         }
 
-        status = vote.completed !== 'true';
+        vote.completed = 'true';
 
-        vote.completed = status.toString();
-
-        if (status) {
-          vote.completionDate = (new Date()).toJSON();
-        }
+        vote.completionDate = (new Date()).toJSON();
 
         this.setTimestampAccess('voteList', true);
 
