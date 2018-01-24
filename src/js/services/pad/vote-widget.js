@@ -51,9 +51,9 @@ angular.module('Teem')
     function add (editor, scope) {
       var vote = {
             text: '',
-            thumbUp: '0',
-            thumbDown: '0',
-            thumbsUpDown: '0'
+            thumbUp: 0,
+            thumbDown: 0,
+            thumbsUpDown: 0
           },
           selection = editor.getSelection(),
           widget;

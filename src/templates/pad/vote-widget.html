@@ -11,6 +11,9 @@
                 ng-model="vote.text"
                 placeholder="{{ 'vote.new.placeholder' | translate }}">
       </textarea>
+      <div ng-if="!project.isParticipant() && vote.completed === 'true'" class="section-text-readonly">
+        {{ vote.text }}
+      </div>
     </div>
     <div>
       <table class="table">
@@ -26,13 +29,19 @@
         </th>
       </tr>
         <tr >
-          <td><input class="vote-input-number" type="number" ng-model="vote.thumbUp"></input></td>
-          <td><input class="vote-input-number" type="number"  ng-model="vote.thumbDown"></input></td>
-          <td><input class="vote-input-number" type="number"  ng-model="vote.thumbsUpDown"></input></td>
+          <td>
+            <input ng-readonly="vote.completed === 'true'" ng-if="project.isParticipant()" class="vote-input-number" type="number" ng-model="vote.thumbUp"></input>
+          </td>
+          <td>
+            <input ng-readonly="vote.completed === 'true'" ng-if="project.isParticipant()" class="vote-input-number" type="number"  ng-model="vote.thumbDown"></input>
+          </td>
+          <td>
+            <input ng-readonly="vote.completed === 'true'" ng-if="project.isParticipant()" class="vote-input-number" type="number"  ng-model="vote.thumbsUpDown"></input>
+          </td>
         </tr>
       </table>
     </div>
-    <div class="vote-button">
+    <div ng-if="project.isParticipant() && vote.completed !== 'true'" class="vote-button">
        <button class="invite-button btn btn-primary btn-raised" ng-click="sendVote(vote, $event)" >
          <img src="/images/ballot_box18x18.png" width="5%" height="100%"/>
          <span translate>vote.icon</span>

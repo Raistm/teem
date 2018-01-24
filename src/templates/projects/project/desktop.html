@@ -5,7 +5,6 @@
 <div class="project-title-editable container">
   <input class="h1 title-input form-control" ng-model="project.title"
   placeholder="{{'project.title.placeholder' | translate}}" ng-disabled="!project.isParticipant()">
-  <button>Resumen</button>
 
   <button class="btn btn-lg btn-primary btn-raised project-join-btn"
           ng-if="!project.isParticipant()"
@@ -53,12 +52,12 @@
   </div>
 
   <div class="col-md-4">
-    <div sticky class="project-utils">
+    <div sticky class="project-utils flex-container flex-scroll">
       <div project-people></div>
       <div speaking-time></div>
       <div class="project-needs-section">
         <h2 translate>need.nav.title</h2>
-        <div need-list project="project" needs="project.needs" display="panel" ng-class="project.isParticipant() ? '' : 'has-cta'"></div>
+        <div need-list project="project" needs="project.needs" display="panel" class="flex-container" ng-class="project.isParticipant() ? '' : 'has-cta'"></div>
       </div>
     </div>
   </div>
