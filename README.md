@@ -1,17 +1,16 @@
-# Teem
+# Teem-Actas
 
-Teem is a web tool and mobile app for collaboration in communities, collectives and social movements, which facilitates onboarding of newcomers. It is built within the [P2Pvalue project](http://p2pvalue.eu/) with a focus on [common-based peer production communities (CBPPs)](https://en.wikipedia.org/wiki/Commons-based_peer_production)
+Teem-Actas is a web tool and mobile app oriented to make easier record meetings for collaboration in communities, collectives and social movements, which facilitates onboarding of newcomers. It is built by students with a focus on [common-based peer production communities (CBPPs)](https://en.wikipedia.org/wiki/Commons-based_peer_production)
 
-Find more in:
+You can find Teem project which we based on in:
 http://teem.works/
 
-[![Build Status](https://travis-ci.org/Grasia/teem.svg?branch=master)](https://travis-ci.org/Grasia/teem)
-[![Join the chat at https://gitter.im/P2Pvalue/teem](https://img.shields.io/gitter/room/nwjs/nw.js.svg
-)](https://gitter.im/P2Pvalue/teem)
+Also in GitHub:
+https://github.com/Grasia/teem
 
 ## Getting Started
 
-To get you started you can simply clone the teem repository and install the dependencies:
+To get you started you can simply clone the teem-actas repository and install the dependencies:
 
 ### Prerequisites
 
@@ -33,18 +32,18 @@ And then restart your computer.
 
 Finally, you also need [Docker Compose](https://docs.docker.com/compose/) to set up the development environment. Follow the instructions at [Install Docker Compose](https://docs.docker.com/compose/install/)
 
-### Clone teem
+### Clone teem-actas
 
-Clone the teem repository using `git`:
+Clone the teem-actas repository using `git`:
 
 ```
-git clone https://github.com/Grasia/teem.git
-cd teem
+git clone https://github.com/Raistm/teem-actas.git
+cd teem-actas
 ```
 
 ### Install Dependencies
 
-We have two kinds of dependencies in this project: tools and angular framework code.  The tools help
+We have two kinds of dependencies in this project: tools and angular framework code. The tools help
 us manage and test the application.
 
 * We get the tools we depend upon via `npm`, the node package manager.
@@ -86,7 +85,7 @@ Now browse to the app at `http://localhost:8000/`
 
 ## Testing
 
-There are two kinds of tests in the teem application: Unit tests and End to End tests.
+There are two kinds of tests in the teem-actas application: Unit tests and End to End tests.
 
 To run both, you need the Java Development Kit (such as OpenJDK 7), and run:
 
@@ -96,7 +95,7 @@ gulp test
 
 ### Unit Tests
 
-The teem app comes preconfigured with unit tests. These are written in
+The teem-actas app comes preconfigured with unit tests. These are written in
 Jasmine, which we run with the Karma Test Runner. We provide a Karma
 configuration file to run them.
 
@@ -105,7 +104,7 @@ configuration file to run them.
 
 ### End-to-end Tests
 
-The teem app comes with end-to-end tests, again written in Jasmine. These tests
+The teem-actas app comes with end-to-end tests, again written in Jasmine. These tests
 are run with the Protractor End-to-End test runner.  It uses native events and has
 special features for Angular applications.
 
@@ -116,6 +115,4 @@ Protractor simulates interaction with our web app and verifies that the applicat
 correctly. Therefore, our web server needs to be serving up the application, so that Protractor
 can interact with it.
 
-## Contact
-
-For more information on P2Pvalue project please check out http://p2pvalue.eu/
+If you want information about P2Pvalue project please check out http://p2pvalue.eu/
